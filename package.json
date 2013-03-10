@@ -1,0 +1,19 @@
+{
+  "name": "squircle",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "locomotive": "0.3.x",
+    "express": "3.x.x",
+    "connect-powered-by": "0.1.x",
+    "ejs": "0.8.x",
+    "passport" : "",
+    "passport-local": "",
+    "connect-flash": "",
+    "mongoose" : "",
+    "mongoose-types" : "",
+    "locomotive-mongoose": "",
+    "bcrypt": "",
+    "underscore": ""
+  }
+}
