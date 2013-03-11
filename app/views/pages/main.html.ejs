@@ -1,11 +1,111 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome aboard! Visit <a href="http://locomotivejs.org/">locomotivejs.org</a> for details.</p>
-  </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=7; IE=EmulateIE9; IE=EmulateIE10;"/>
+		<base href="http://developer.here.com/apiexplorer/examples/api-for-js/getting-started/basic-map-with-components.html" />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<title>Nokia Maps API for JavaScript Example: Basic map with components</title>
+		<meta name="description" content="How to get a basic map with all UI components enabled"/>
+		<meta name="keywords" content="basiccomponents, getting started, basic map, components"/>
+		<!-- For scaling content for mobile devices, setting the viewport to the width of the device-->
+		<meta name=viewport content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<!-- Styling for example container (NoteContainer & Logger)  -->
+		<link rel="stylesheet" type="text/css" href="http://developer.here.com/apiexplorer/examples/templates/js/exampleHelpers.css"/>
+
+		<style type="text/css">
+			html {
+				overflow:hidden;
+			}
+			
+			body {
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+			}
+			
+			#mapContainer {
+				width: 100%;
+				height: 100%;
+				left: 0;
+				top: 0;
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="mapContainer"></div>
+		<div id="uiContainer"></div>
+		<script type="text/javascript" charset="UTF-8" src="http://api.maps.nokia.com/2.2.4/jsl.js?with=all"></script>
+		<script type="text/javascript" charset="UTF-8" src="http://livejs.com/live.js"></script>
+		<!-- JavaScript for example container (NoteContainer & Logger)  -->
+		<!--script type="text/javascript" charset="UTF-8" src="http://developer.here.com/apiexplorer/examples/templates/js/exampleHelpers.js"></script-->
+		<script type="text/javascript">
+
+		nokia.Settings.set("appId", "4rVgVrLbPNQQf3hvoLuL"); 
+		nokia.Settings.set("authenticationToken", "Xpw61XtO7UI1_9K9RM8B6w");
+
+		// Get the DOM node to which we will append the map
+		var mapContainer = document.getElementById("mapContainer");
+		// Create a map inside the map container DOM node
+		var map = new nokia.maps.map.Display(mapContainer, {
+			// Initial center and zoom level of the map
+			center: [52.51, 13.4],
+			zoomLevel: 10,
+			// We add the behavior component to allow panning / zooming of the map
+			components:[new nokia.maps.map.component.Behavior()]
+		});
+
+		var marker = 
+		{
+				text: "N9",
+				textPen: {
+					strokeColor: "#333"
+				},
+				brush: {
+					color: "#FFF"
+				},
+				/* - pen: the color which is used to draw the outline of the shape.
+				 * 		When you use very bright fill colors for your brush color we 
+				 * 		recommed changing it or else your markers may not be recognizable on the map.
+				 * 		It can be either an instance of nokia.maps.map.Pen or an object literal.
+				 */
+				pen: {
+					strokeColor: "#333"
+				}
+		}
+
+		map.objects.add(new nokia.maps.map.StandardMarker(
+			/* We use  nokia.maps.geo.Coordinate.walk to generate
+			 * geoCoordinate for created StandardMarker;
+			 * 
+			 * Coordinate.walk takes 3 arguments
+			 * 		- bearing: The bearing to use in the calculation in degrees 
+			 * 		- distance: The distance to the destination in meters 
+			 * 		- [overGreatCircle]: Optional argument
+			 * 				By default false. 
+			 * 				If set true the computation uses the "Great Circle" algorithm otherwise "Rhumb Line". 
+			 */
+			map.center.walk(360/ 3, 6000), 
+			// Initial values for StandardMarker properties
+			marker
+		));
+
+
+		/* We create a UI notecontainer for example description
+		 * NoteContainer is a UI helper function and not part of the Nokia Maps API
+		 * See exampleHelpers.js for implementation details 
+		 */
+		/*var noteContainer = new NoteContainer({
+			id: "basicMapWithComponentsUi",
+			parent: document.getElementById("uiContainer"),
+			title: "Squircles!",
+			content:
+				'<p>Here they are, where the squircles hiding!</p>'
+		});*/
+
+		</script>
+	</body>
 </html>

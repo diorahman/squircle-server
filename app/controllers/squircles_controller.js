@@ -34,8 +34,9 @@ SquirclesController.create = function() {
 
 	var body = self.req.body
 
-	function update(squircle, cb){
-		squircle.save(squircle, cb)
+	function update(squircle, data, cb){
+		squircle = _.extend(squircle, data)
+		squircle.save(cb)
 	}
 
 	function create(data, cb){
@@ -44,11 +45,10 @@ SquirclesController.create = function() {
 	}
 
 	function handle(data, cb){
-		console.log(data)
 		Squircle.findOne({ udid : data.udid}, function(err, squircle){
 			if(err) return cb(err)
 			if(squircle){
-				update(squircle, cb)
+				update(squircle, data, cb)
 			}else{
 				create(data, cb)
 			}
@@ -66,17 +66,15 @@ SquirclesController.create = function() {
 		else
 			_ip = self.req.connection.remoteAddress
 
-		return _ip == "127.0.0.1" ? "8.8.8.8" : _ip
+		return _ip == "127.0.0.1" ? "202.152.194.151" : _ip
 	}
 
 	self.respond({
 		'json' : function(){
-			// TODO: handle proxy
-			// check for X-Forwarded-For
+
 			body = _.extend(body, geoip.lookup(ip(self.req)))
 
 			handle(body, function(err, squircle){
-				//console.log(squircle)
 				if(err) self.res.send(500)
 				self.res.send(squircle)
 			})
