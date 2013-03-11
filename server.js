@@ -1,4 +1,4 @@
-if (require("piping")()) {
+//if (require("piping")()) {
 
 var locomotive = require('locomotive')
 var env = process.env.NODE_ENV || 'development'
@@ -13,4 +13,4 @@ locomotive.boot(__dirname, env, function(err, server) {
 	})
 })
 
-}
+//}
