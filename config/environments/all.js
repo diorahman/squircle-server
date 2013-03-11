@@ -34,6 +34,7 @@ module.exports = function() {
   // Use middleware.  Standard [Connect](http://www.senchalabs.org/connect/)
   // middleware is built-in, with additional [third-party](https://github.com/senchalabs/connect/wiki)
   // middleware available as separate modules.
+  // this.use(express.basicAuth('foo9', 'bar9'))
   this.use(poweredBy('Locomotive'));
   this.use(express.logger());
   this.use(express.favicon());

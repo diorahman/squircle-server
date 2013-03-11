@@ -15,6 +15,6 @@
     "locomotive-mongoose": "",
     "bcrypt": "",
     "underscore": "",
-    "socket.io": ""
+    "sockjs": ""
   }
 }
