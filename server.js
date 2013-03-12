@@ -9,15 +9,15 @@ var http = require('http')
 var sockjs = require('sockjs')
 
 var sockjsOpt = { sockjs_url : "http://cdn.sockjs.org/sockjs-0.3.min.js"}
+var _ = require('underscore')
 
+var pool = require('./lib/pool')
 var sock = sockjs.createServer(sockjsOpt)
+
 sock.on('connection', function(c){
-
-	// todo create handler 
-	// todo create client list holder
-
-	c.on('data', function(message){
-		c.write(message)
+	pool.add(c)
+	c.on('close', function(){
+		pool.remove(this)
 	})
 })
 
@@ -25,7 +25,7 @@ locomotive.boot(__dirname, env, function(err, server) {
 	if (err) { throw err }
 
 	var httpServer = http.createServer(server);
-	sock.installHandlers(httpServer, { prefix: '/echo'})
+	sock.installHandlers(httpServer, { prefix: '/sqrcl'})
 	
 	httpServer.listen(port, address, function() {
 		var addr = this.address();

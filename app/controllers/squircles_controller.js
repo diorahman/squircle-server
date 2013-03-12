@@ -3,6 +3,7 @@ var Controller = locomotive.Controller
 var geoip = require('../../lib/geoip-lite/lib/geoip')
 var Squircle = require('../model/squircle')
 var _ = require('underscore')
+var pool = require('../../lib/pool')
 
 var SquirclesController = new Controller()
 
@@ -20,7 +21,7 @@ SquirclesController.index = function() {
 	self.respond({
 		'json' : function(){
 			all(function(err, squircles){
-				if(err) self.res.send(500)
+				if(err) self.res.send(404)
 				else{
 					self.res.send(squircles)
 				}
@@ -69,14 +70,30 @@ SquirclesController.create = function() {
 		return _ip == "127.0.0.1" ? "202.152.194.151" : _ip
 	}
 
+	function all(cb){
+		Squircle.find({}, function(err, squircles){
+
+			// todo: pick data to be sent back
+			return cb(err, squircles)
+		})
+	}
+
 	self.respond({
 		'json' : function(){
 
 			body = _.extend(body, geoip.lookup(ip(self.req)))
 
 			handle(body, function(err, squircle){
-				if(err) self.res.send(500)
-				self.res.send(squircle)
+				if(err) self.res.send(404)
+
+				all(function(err, squircles){
+					_.each(pool.get(), function(c){
+						c.write('reload')
+					})
+
+					self.res.send(squircle)
+				})
+
 			})
 		}
 	})
