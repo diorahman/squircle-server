@@ -7,6 +7,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
 	Squircle.find({}, function(err, list){
+		console.log(list)
 		list.forEach(function(item){
 			item.remove()
 		})

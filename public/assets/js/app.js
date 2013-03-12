@@ -39,9 +39,7 @@ function markers(points){
 }
 
 function load(){
-	console.log('load')
 	$.getJSON('/squircles', function(points){
-		console.log(points)
 		markers(points)
 	})
 }
@@ -49,10 +47,9 @@ function load(){
 var sockjs_url = '/sqrcl';
 var sockjs = new SockJS(sockjs_url);
 
-sockjs.onopen = function(){}
+sockjs.onopen = function(){ console.log('open')}
 sockjs.onclose   = function(){}
 sockjs.onmessage = function(e) { 
-	console.log('message')
 	if(e.data == 'reload'){
 		load()
 	}
