@@ -9,6 +9,7 @@ var SquircleSchema = new Schema({
 	os  : {type: String},
 	language  : {type: String},
 	remark  : {type: String},
+	timestamp : {type: Date},
 	range : [{type: Number}],
   	country: {type: String},
   	region: {type: String},

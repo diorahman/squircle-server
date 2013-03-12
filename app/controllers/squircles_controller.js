@@ -37,11 +37,13 @@ SquirclesController.create = function() {
 
 	function update(squircle, data, cb){
 		squircle = _.extend(squircle, data)
+		squircle.timestamp = new Date()
 		squircle.save(cb)
 	}
 
 	function create(data, cb){
 		var s = new Squircle(data)
+		s.timestamp = new Date()
 		s.save(cb)
 	}
 
